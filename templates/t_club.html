@@ -1,0 +1,154 @@
+{% extends "layout_param.html" %}
+{% block paramselect %}
+<td>Route</td>
+        <!-- Dropdown -->
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Route
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="route_dropdown">
+                <li><a class="dropdown-item" href="#">LHRDEN</a></li>
+                <li><a class="dropdown-item" href="#">LGWTPA</a></li>
+            </ul>
+        </div>
+        <div class="row mb-3">
+            
+            <form action="/update" method="post">
+                <p>Select Operating Carrier:</p>
+                {% for value in unique_aln_values %}
+                    <input type="radio" id="{{ value }}_op" name="carrier" value="{{ value }}">
+                    <label for="{{ value }}_op">{{ value }}</label><br>
+                {% endfor %}
+                <!-- Add other form elements and a submit button as needed -->
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Preset Buckets
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="route_dropdown">
+                <li><a class="dropdown-item" href="#">17pp high</a></li>
+                <li><a class="dropdown-item" href="#">17pp low</a></li>
+            </ul>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="P2 Percentile" step="any">
+            </div>
+            <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="P2 Percentile" step="any">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                180 AP:
+            </div>
+            <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="Index_start" step="any">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                120 AP:
+            </div>
+            <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="Index_start" step="any">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                100 AP:
+            </div>
+            <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="Index_start" step="any">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <button class="btn btn-primary" type="button">Load Percentiles</button>
+        </div>
+
+        <div class="row mb-3">
+            <button class="btn btn-primary" type="button">Build Parameters</button>
+        </div>
+
+        <div class="row mb-3">
+            <form action="/update" method="post">
+                <p>Select Parameter Adjustment Mode:</p>
+                <input type="radio" id="adj_auto" name="param_adjustment_mode" value="auto">
+                <label for="adj_auto">Automatic</label><br>
+            
+                <input type="radio" id="adj_manual" name="param_adjustment_mode" value="manual">
+                <label for="adj_manual">Manual</label><br>
+        </div>
+
+{% endblock paramselect %}
+{% block datatbl %}
+<h2>Parameter Table</h2>
+
+<form action="/update" method="post">
+    <table class="table table-bordered" id="data-table">
+        <thead>
+            <tr>
+                <!-- Add a new header row above the existing one -->
+                <th colspan="2">Pricing Index</th>
+                <th colspan="2">Flight Op</th>
+                <th colspan="2">180 AP Parameters</th>
+                <th colspan="2">120 AP Parameters</th>
+                <th colspan="2">100 AP Parameters</th>
+            </tr>
+            <tr>
+                <th>PRICE_INDEX</th>
+                <th>NUM</th>
+                <th>ROUTE</th>
+                <th>ALN</th>
+                <th style="width: 75px;">P1</th>
+                <th style="width: 75px;">P2</th>
+                <th style="width: 75px;">P1</th>
+                <th style="width: 75px;">P2</th>
+                <th style="width: 75px;">P1</th>
+                <th style="width: 75px;">P2</th>
+
+        </thead>
+        <tbody>
+            {% for i, row in enumerate(data) %}
+            <tr>
+                <td>{{ row.PRICE_INDEX }}</td>
+                <td>{{ row.PRICE_INDEX_NUM }}</td>
+                <td>{{ row.ROUTE }}</td>
+                <td>{{ row.INVENTORY_CARRIER_CD }}</td>
+                <td>
+                    <input type="number" step="0.01" name="180_P1_{{i}}" value="{{ row['180_P1']|round(2) }}" {% if row['180_P1'] == 9 %}disabled{% endif %}>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="180_P2_{{i}}" value="{{ row['180_P2']|round(2) }}" {% if row['180_P2'] == 9 %}disabled{% endif %}>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="120_P1_{{i}}" value="{{ row['120_P1']|round(2) }}" {% if row['120_P1'] == 9 %}disabled{% endif %}>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="120_P2_{{i}}" value="{{ row['120_P2']|round(2) }}" {% if row['120_P2'] == 9 %}disabled{% endif %}>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="100_P1_{{i}}" value="{{ row['100_P1']|round(2) }}" {% if row['100_P1'] == 9 %}disabled{% endif %}>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="100_P2_{{i}}" value="{{ row['100_P2']|round(2) }}" {% if row['100_P2'] == 9 %}disabled{% endif %}>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock datatbl %}

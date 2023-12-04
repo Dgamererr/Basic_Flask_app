@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        {% block paramselect %}{% endblock %}
+    </div>
+    <div class="col-md-9">
+        {% block datatbl %}{% endblock %}
+    </div>
+</div>
+{% endblock content %}
