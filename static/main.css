@@ -90,3 +90,12 @@ body {
     width: 75px; /* Or any other unit like em, %, etc. */
     box-sizing: border-box; /* To include padding and borders in the height */
 }
+
+  .form-box {
+    border: 1px solid #ddd; /* Adjust the color as needed */
+    padding: 10px; /* Adjust the size as needed */
+    margin: 20px auto; /* Centers the form with 20px of space around it */
+    background-color: #fff; /* Adjust the color as needed */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for depth */
+    max-width: 1000px; /* Adjust the width as needed */
+  }

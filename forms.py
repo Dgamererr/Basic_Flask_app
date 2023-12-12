@@ -21,3 +21,8 @@ class LoginForm(FlaskForm):
                              validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+class filter_data():
+    def __init__(self, route, carrier_cd):
+        self.route = route
+        self.carrier_cd = carrier_cd

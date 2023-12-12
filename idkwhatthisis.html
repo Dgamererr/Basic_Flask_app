@@ -1,0 +1,39 @@
+<form action="/filter_data" method="post">
+    <div class="container">
+        <div class="row">
+            <!-- Route Selection Buttons -->
+            {% for route in unique_routes %}
+            <div class="col-md-4 mb-3"> 
+                <input type="radio" id="route_{{ route }}" name="selected_route" value="{{ route }}">
+                <label for="route_{{ route }}" class="btn btn-block {{ 'btn-primary' if route == selected_route else 'btn-secondary' }}">{{ route }}</label>
+            </div>
+            {% if loop.index is divisibleby 3 %}
+                </div><div class="row">
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Operating Carrier Selection -->
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-12">
+                <p>Select Operating Carrier:</p>
+                {% for value in unique_aln_values %}
+                    <input type="radio" id="{{ value }}_op" name="carrier" value="{{ value }}"
+                        {% if value == selected_carrier %}checked{% endif %}>
+                    <label for="{{ value }}_op">{{ value }}</label><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</form>
